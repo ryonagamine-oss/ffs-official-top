@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FFS分析 オフィシャルサイト</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --dark-bg: #0a0a0a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark-bg);
+      color: #fff;
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    }
+
+    /* ── ヒーロー（スプラッシュ画面） ── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #hero {
+      background: url('hero-bg.jpg') center/cover no-repeat;
+    }
+
+    /* ヒーロー内コンテンツ全体 */
+    .hero-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 18px;
+      text-align: center;
+      padding-top: 12vh;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    /* タイトル（少し小さめ） */
+    .hero-title {
+      font-size: clamp(6rem, 14vw, 8rem);
+      font-weight: bold;
+      color: #fff;
+      line-height: 1.3;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+    }
+
+    /* 公益事業テキスト（NPOクレジットと同サイズ） */
+    .hero-notice {
+      font-size: clamp(3.4rem, 6vw, 4rem);
+      color: #ffe600;
+      letter-spacing: 0.05em;
+      margin-top: 2em;
+      margin-bottom: 1em;
+    }
+
+    /* FFS理論とはボタン */
+    #hero .entrance {
+      display: block;
+      margin-top: 1em;
+      background: #cc0000;
+      color: #fff;
+      border: 5px solid #ffff00;
+      padding: 0.7em 5em;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: bold;
+      letter-spacing: 0.4em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.15s;
+    }
+    #hero .entrance:hover {
+      background: #ff1a00;
+      transform: scale(1.06);
+    }
+
+    /* NPOクレジット */
+    .hero-npo {
+      font-size: clamp(3.4rem, 6vw, 4rem);
+      color: #ffe600;
+      line-height: 1.8;
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    /* ── FFSトップセクション ── */
+    #ffs-top {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 90px 24px 110px;
+    }
+
+    #ffs-top h2 {
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      text-align: center;
+      margin-bottom: 14px;
+      background: linear-gradient(90deg, #00e5ff, #69ff47, #ff9100);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-lead {
+      text-align: center;
+      color: #bbb;
+      font-size: 1rem;
+      line-height: 2;
+      margin-bottom: 60px;
+    }
+
+    /* 5因子グリッド */
+    .factors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 16px;
+      margin-bottom: 70px;
+    }
+
+    .factor-card {
+      border: 1px solid;
+      border-radius: 8px;
+      padding: 22px 14px;
+      text-align: center;
+      background: rgba(255,255,255,0.04);
+      transition: transform 0.2s;
+    }
+    .factor-card:hover { transform: translateY(-5px); }
+
+    .factor-card .label {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 5px;
+      opacity: 0.65;
+    }
+    .factor-card .name {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .factor-card .desc {
+      font-size: 0.77rem;
+      margin-top: 8px;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .f-a { border-color: #ff5252; color: #ff5252; }
+    .f-b { border-color: #ffd740; color: #ffd740; }
+    .f-c { border-color: #448aff; color: #448aff; }
+    .f-d { border-color: #69ff47; color: #69ff47; }
+    .f-e { border-color: #ff9100; color: #ff9100; }
+
+    /* NPO紹介 */
+    .npo-box {
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 36px 32px;
+      background: rgba(255,255,255,0.03);
+      margin-bottom: 60px;
+      text-align: center;
+    }
+    .npo-box h3 {
+      font-size: 1rem;
+      color: #00e5ff;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+    .npo-box p {
+      color: #ccc;
+      font-size: 0.9rem;
+      line-height: 2;
+    }
+
+    /* CTAボタン */
+    .cta-wrap { text-align: center; }
+    .cta-wrap p { color: #999; font-size: 0.9rem; margin-bottom: 20px; }
+
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: #fff;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: bold;
+      padding: 0.75em 3.2em;
+      border-radius: 50px;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      box-shadow: 0 0 28px rgba(0,198,255,0.4);
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .cta-btn:hover {
+      box-shadow: 0 0 48px rgba(0,198,255,0.7);
+      transform: scale(1.05);
+    }
+
+    /* フッター */
+    footer {
+      text-align: center;
+      padding: 26px;
+      border-top: 1px solid #181818;
+      color: #444;
+      font-size: 0.78rem;
+    }
+
+    /* ETHOS Neo システム概要ボックス */
+    .ethos-box {
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 36px 32px;
+      background: rgba(255,255,255,0.03);
+      margin-bottom: 48px;
+    }
+    .ethos-box h3 {
+      font-size: 1.1rem;
+      color: #ff9100;
+      letter-spacing: 0.1em;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .ethos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .ethos-item {
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .ethos-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .ethos-title {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+    .ethos-desc {
+      font-size: 0.82rem;
+      color: #bbb;
+      line-height: 1.8;
+    }
+
+    /* お知らせバー */
+    .notice-bar {
+      background: #1a1a1a;
+      border-bottom: 1px solid #333;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      color: #ccc;
+      letter-spacing: 0.05em;
+    }
+
+
+  </style>
+</head>
+<body>
+
+
+  <!-- ① スプラッシュ画面 -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-title">FFS分析<br>オフィシャル　サイト</div>
+      <div class="hero-notice">本事業はNPOヒューマンサイエンス研究所の公益性目的事業です。</div>
+      <a class="entrance" href="#ffs-top">FFS分析とは</a>
+    </div>
+    <div class="hero-npo">
+      特定非営利活動法人　ヒューマンサイエンス研究所<br>
+      <span style="display:block;text-align:center;">代表　小林恵智（FFS理論提唱者）</span>
+    </div>
+  </section>
+
+  <!-- ② FFSトップ -->
+  <section id="ffs-top">
+
+    <h2>FFS理論とは</h2>
+    <p class="section-lead">
+      Five Factors &amp; Stress（FFS）理論は、人間の思考・行動パターンを<br>
+      5つの因子とストレス値で科学的に分析する、組織・人材開発のための理論です。<br>
+      自己理解を深め、チームワークや人間関係の改善に広く活用されています。
+    </p>
+
+    <div class="factors">
+      <div class="factor-card f-a">
+        <div class="label">Factor A</div>
+        <div class="name">凝集性</div>
+        <div class="desc">仲間意識・帰属欲求。チームの結束を重んじる</div>
+      </div>
+      <div class="factor-card f-b">
+        <div class="label">Factor B</div>
+        <div class="name">受容性</div>
+        <div class="desc">他者への共感・受け入れる力。調和を大切にする</div>
+      </div>
+      <div class="factor-card f-c">
+        <div class="label">Factor C</div>
+        <div class="name">弁別性</div>
+        <div class="desc">論理的・合理的思考。白黒つけてスッキリしたい</div>
+      </div>
+      <div class="factor-card f-d">
+        <div class="label">Factor D</div>
+        <div class="name">保全性</div>
+        <div class="desc">慎重さ・計画性。リスクを避け確実に進めたい</div>
+      </div>
+      <div class="factor-card f-e">
+        <div class="label">Factor E</div>
+        <div class="name">拡散性</div>
+        <div class="desc">好奇心・冒険心。新しいことへの挑戦を楽しむ</div>
+      </div>
+    </div>
+
+    <div class="npo-box">
+      <h3>特定非営利活動法人　ヒューマンサイエンス研究所</h3>
+      <p>
+        FFS理論は、小林恵智博士（同研究所代表）により提唱されました。<br>
+        人間の本質的な違いを因子として可視化し、個人・組織の可能性を<br>
+        最大化することを目的としています。<br>
+        本サイトは同研究所の使用許諾のもとで運営されています。
+      </p>
+    </div>
+    <!-- ETHOS Neo システム概要 -->
+    <div class="ethos-box">
+      <h3>ETHOS Neo システムについて</h3>
+      <div class="ethos-grid">
+        <div class="ethos-item">
+          <div class="ethos-icon">👤</div>
+          <div class="ethos-title">個人でのFFS・ストレス分析</div>
+          <div class="ethos-desc">
+            アカウントを登録した個人が、有償でFFS分析およびストレス分析を受けることができます。
+            自身の分析結果はマイページでいつでも確認可能です。
+          </div>
+        </div>
+        <div class="ethos-item">
+          <div class="ethos-icon">👥</div>
+          <div class="ethos-title">グループ編成とチーム分析</div>
+          <div class="ethos-desc">
+            グループを作成してメンバーを招待できます。
+            グループ内の構成員間でチーム分析を行い、
+            メンバー同士の特性や関係性を可視化することができます。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <p>ETHOS Neo システムを使うには</p>
+      <a class="cta-btn"
+         href="https://ffs-official.jp/personal/login"
+         target="_blank">
+        ETHOS Neo システムを利用する
+      </a>
+    </div>
+
+  </section>
+
+  <footer>
+    &copy; 特定非営利活動法人 ヒューマンサイエンス研究所
+  </footer>
+
+</body>
+</html>
