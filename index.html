@@ -23,27 +23,23 @@
     #hero {
       position: relative;
       width: 100%;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    #hero {
+      min-height: 100vh;
       background: url('hero-bg.jpg') center/cover no-repeat;
     }
 
     /* ヒーロー内コンテンツ全体 */
     .hero-content {
-      position: absolute;
-      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
+      min-height: 100vh;
       gap: 18px;
       text-align: center;
       padding-top: 12vh;
       padding-left: 24px;
       padding-right: 24px;
+      padding-bottom: 40px;
     }
 
     /* タイトル（少し小さめ） */
@@ -90,13 +86,11 @@
       font-size: clamp(0.75rem, 2.2vw, 4rem);
       color: #ffe600;
       line-height: 1.8;
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
       white-space: normal;
       text-align: center;
       width: 90%;
+      margin-top: auto;
+      padding-bottom: 40px;
     }
 
     /* ── FFSトップセクション ── */
@@ -288,10 +282,10 @@
       <div class="hero-title">FFS分析<br><span style="font-size:0.6em; white-space:nowrap;">オフィシャルサイト</span></div>
       <div class="hero-notice">本事業はNPOヒューマンサイエンス研究所の公益目的事業です。</div>
       <a class="entrance" href="#ffs-top">FFS分析とは</a>
-    </div>
-    <div class="hero-npo">
-      特定非営利活動法人　ヒューマンサイエンス研究所<br>
-      <span style="display:block;text-align:center;">代表　小林恵智（FFS理論提唱者）</span>
+      <div class="hero-npo">
+        特定非営利活動法人　ヒューマンサイエンス研究所<br>
+        <span style="display:block;text-align:center;">代表　小林恵智（FFS理論提唱者）</span>
+      </div>
     </div>
   </section>
 
