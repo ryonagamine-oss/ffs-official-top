@@ -241,7 +241,7 @@ function buildFAQ(rows) {
   return html;
 }
 
-fetch('ethosneofaq.csv')
+fetch('ethosneofaq.csv?v=' + Date.now())
   .then(res => res.text())
   .then(text => {
     const rows = parseCSV(text);
