@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>よくある質問（FAQ）| FFS分析 オフィシャルサイト</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #f5f5f5;
+      color: #333;
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    }
+
+    .site-header {
+      background: #2980b9;
+      border-bottom: 1px solid #2471a3;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-header .logo {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+    .site-header .back-link {
+      font-size: 0.82rem;
+      color: #cef;
+      text-decoration: none;
+    }
+    .site-header .back-link:hover { text-decoration: underline; }
+
+    .page-hero {
+      text-align: center;
+      padding: 48px 24px 36px;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .page-hero h1 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: bold;
+      color: #2980b9;
+      margin-bottom: 8px;
+    }
+    .page-hero p { color: #888; font-size: 0.9rem; line-height: 1.8; }
+
+    .faq-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    .toc {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+    .toc h2 { font-size: 0.78rem; color: #999; letter-spacing: 0.1em; margin-bottom: 12px; }
+    .toc ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .toc ul li a { color: #2980b9; font-size: 0.88rem; text-decoration: none; }
+    .toc ul li a:hover { text-decoration: underline; }
+
+    .faq-section { margin-bottom: 32px; }
+    .faq-section h2 {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #2980b9;
+      letter-spacing: 0.05em;
+      border-left: 3px solid #2980b9;
+      padding-left: 12px;
+      margin-bottom: 10px;
+    }
+    .faq-group {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .faq-item { border-bottom: 1px solid #f0f0f0; }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 16px 20px;
+      color: #333;
+      font-size: 0.92rem;
+      font-weight: bold;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.6;
+      transition: background 0.15s;
+    }
+    .faq-q:hover { background: #f5f9fd; }
+    .faq-q .q-mark { color: #2980b9; font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .faq-q .arrow { margin-left: auto; color: #bbb; font-size: 0.75rem; flex-shrink: 0; transition: transform 0.2s; margin-top: 3px; }
+    .faq-q.open .arrow { transform: rotate(180deg); }
+    .faq-a {
+      display: none;
+      padding: 0 20px 16px 42px;
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.9;
+    }
+    .faq-a.open { display: block; }
+
+    .contact-box {
+      background: #e8f4fd;
+      border: 1px solid #90caf9;
+      border-radius: 8px;
+      padding: 28px;
+      margin-top: 32px;
+      text-align: center;
+    }
+    .contact-box h3 { font-size: 1rem; color: #2980b9; margin-bottom: 12px; letter-spacing: 0.05em; }
+    .contact-box p { font-size: 0.88rem; color: #555; line-height: 2; }
+    .contact-box strong { color: #333; }
+
+    footer {
+      text-align: center;
+      padding: 26px;
+      border-top: 1px solid #e0e0e0;
+      color: #aaa;
+      font-size: 0.78rem;
+    }
+
+    .loading { text-align: center; padding: 60px; color: #aaa; font-size: 0.9rem; }
+
+    @media (max-width: 640px) {
+      .faq-q { padding: 14px; font-size: 0.87rem; }
+      .faq-a { padding: 0 14px 14px 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="index.html">FFS分析 オフィシャルサイト</a>
+  <a class="back-link" href="index.html">← トップへ戻る</a>
+</header>
+
+<div class="page-hero">
+  <h1>よくある質問（FAQ）</h1>
+  <p>お問い合わせの多いご質問をまとめています。</p>
+</div>
+
+<div class="faq-wrap">
+  <div id="faq-container">
+    <div class="loading">読み込み中...</div>
+  </div>
+
+  <div class="contact-box">
+    <h3>解決しない場合はお問い合わせください</h3>
+    <p>
+      上記で解決しない場合は、下記メールアドレスまでご連絡ください。<br>
+      <strong>info@ffs-official.com</strong>（受付：平日 10:00〜17:00）<br>
+      
+    </p>
+  </div>
+</div>
+
+<footer>
+  &copy; 特定非営利活動法人 ヒューマンサイエンス研究所
+</footer>
+
+<script>
+function toggle(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  answer.classList.toggle('open', !isOpen);
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    const cols = [];
+    let inQuote = false, cell = '';
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"' && !inQuote) { inQuote = true; }
+      else if (ch === '"' && inQuote) { inQuote = false; }
+      else if (ch === ',' && !inQuote) { cols.push(cell); cell = ''; }
+      else { cell += ch; }
+    }
+    cols.push(cell);
+    return Object.fromEntries(headers.map((h, i) => [h.trim(), (cols[i] || '').trim()]));
+  });
+}
+
+function buildFAQ(rows) {
+  // カテゴリーごとにグループ化（出現順を維持）
+  const categories = [];
+  const categoryMap = {};
+  rows.forEach(row => {
+    if (!categoryMap[row.category_id]) {
+      categoryMap[row.category_id] = { name: row.category, id: row.category_id, items: [] };
+      categories.push(categoryMap[row.category_id]);
+    }
+    categoryMap[row.category_id].items.push(row);
+  });
+
+  // 目次
+  let html = '<div class="toc"><h2>CATEGORY</h2><ul>';
+  categories.forEach(cat => {
+    html += `<li><a href="#${cat.id}">${cat.name}</a></li>`;
+  });
+  html += '</ul></div>';
+
+  // 各セクション
+  categories.forEach(cat => {
+    html += `<div class="faq-section" id="${cat.id}">`;
+    html += `<h2>${cat.name}</h2>`;
+    html += '<div class="faq-group">';
+    cat.items.forEach(item => {
+      html += `
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="q-mark">Q</span>
+            <span>${item.question}</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="faq-a">${item.answer}</div>
+        </div>`;
+    });
+    html += '</div></div>';
+  });
+
+  return html;
+}
+
+fetch('ethosneofaq.csv')
+  .then(res => res.text())
+  .then(text => {
+    const rows = parseCSV(text);
+    document.getElementById('faq-container').innerHTML = buildFAQ(rows);
+
+    // アンカーで直リンクされた場合に最初のQ&Aを展開
+    const hash = location.hash;
+    if (hash) {
+      const section = document.querySelector(hash);
+      if (section) {
+        const firstQ = section.querySelector('.faq-q');
+        if (firstQ) toggle(firstQ);
+        setTimeout(() => section.scrollIntoView({ behavior: 'smooth' }), 100);
+      }
+    }
+  })
+  .catch(() => {
+    document.getElementById('faq-container').innerHTML =
+      '<p style="text-align:center;color:#666;padding:40px;">FAQの読み込みに失敗しました。</p>';
+  });
+</script>
+
+</body>
+</html>
